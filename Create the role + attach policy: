@@ -1,0 +1,15 @@
+# Create role
+aws iam create-role \
+  --role-name lab1-lambda-dynamodb-role \
+  --assume-role-policy-document file://trust-policy.json
+
+# Attach AWS managed basic execution role (CloudWatch logs)
+aws iam attach-role-policy \
+  --role-name lab1-lambda-dynamodb-role \
+  --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+
+# Attach inline DynamoDB policy
+aws iam put-role-policy \
+  --role-name lab1-lambda-dynamodb-role \
+  --policy-name DynamoDbCrudPolicy \
+  --policy-document file://dynamodb-crud.json
